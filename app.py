@@ -109,17 +109,27 @@ def upload_video():
 
 @app.route("/download/<unique_id>", methods=["GET"])
 def download_video(unique_id):
+    try:
+        output_path = f"output/{unique_id}.mp4"
 
-    output_path = f"output/{unique_id}.mp4"
+        # Check the database status safely
+        status = video_status_db.get(unique_id, "Unknown")
 
-    if video_status_db[unique_id] == "Completed":
-    
-        if os.path.exists(output_path):
-            return send_file(output_path, as_attachment=True)
-    
+        if status == "Completed":
+            if os.path.exists(output_path):
+                return send_file(output_path, as_attachment=True)
+            else:
+                # File missing on disk despite db status
+                return render_template("upload-error.html")
         else:
+            # Video is still processing or failed, send back to progress
             return render_template("progress.html", video_id=unique_id)
 
+    except Exception as e:
+        print(f"Download route error: {e}")
+        return render_template("upload-error.html")
+
 if __name__ == "__main__":
-    
+    # Clean, threaded execution
     app.run(debug=True, threaded=True)
+    
