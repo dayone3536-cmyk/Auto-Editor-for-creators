@@ -52,7 +52,7 @@ def background_video_editor(input_path, output_path, unique_id):
         # Update status to processing
         video_status_db[unique_id] = "Processing: Running auto-editor..."
         
-        command = f"auto-editor {input_path} --output {output_path} --margin 0.4s --video_codec h264 --audio_codec aac"
+        command = f"auto-editor {input_path} --output {output_path} --margin 0.4s --video_codec h264 --audio_codec aac --no_open"
         
         # Run the auto-editor (this takes time, but it's okay because it's in the background!)
         subprocess.run(command, shell=True, check=True)
@@ -74,13 +74,15 @@ def upload_video():
         video = request.files["file"]
 
         # 2. Setup folders
-        os.makedirs("uploads", exist_ok=True)
-        os.makedirs("output", exist_ok=True)
+        os.makedirs("/data/uploads", exist_ok=True)
+        os.makedirs("/data/output", exist_ok=True)
 
         # 3. Create unique file paths
         unique_id = str(uuid.uuid4())
-        input_path = f"uploads/{unique_id}.mp4"
-        output_path = f"output/{unique_id}.mp4"
+        
+        input_path = f"/data/uploads/{unique_id}.mp4"
+        
+        output_path = f"/data/output/{unique_id}.mp4"
 
         # 4. Save the raw uploaded file
         video.save(input_path)
@@ -110,7 +112,7 @@ def upload_video():
 @app.route("/download/<unique_id>", methods=["GET"])
 def download_video(unique_id):
     try:
-        output_path = f"output/{unique_id}.mp4"
+        output_path = f"/data/output/{unique_id}.mp4"
 
         # Check the database status safely
         status = video_status_db.get(unique_id, "Unknown")
@@ -118,18 +120,15 @@ def download_video(unique_id):
         if status == "Completed":
             if os.path.exists(output_path):
                 return send_file(output_path, as_attachment=True)
+                
             else:
-                # File missing on disk despite db status
                 return render_template("upload-error.html")
+                
         else:
-            # Video is still processing or failed, send back to progress
             return render_template("progress.html", video_id=unique_id)
 
     except Exception as e:
         print(f"Download route error: {e}")
         return render_template("upload-error.html")
 
-if __name__ == "__main__":
-    # Clean, threaded execution
-    app.run(debug=True, threaded=True)
-    
+
