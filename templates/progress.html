@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creating Magic</title>
+    
+    <!-- This tells the browser to try downloading the video every 6 seconds -->
+    <meta http-equiv="refresh" content="6;url=/download/{{ video_id }}">
+    
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; 
+            background: #000; 
+            color: #fff; 
+            text-align: center; 
+            padding-top: 150px; 
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border-left-color: #fff;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <h1>We are editing your video...</h1>
+    <div class="spinner"></div>
+    <p style="color: #888;">Your download will start automatically as soon as it is ready.</p>
+
+</body>
+</html>

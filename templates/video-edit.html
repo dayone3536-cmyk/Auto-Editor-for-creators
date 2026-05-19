@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href = "/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+
+    <div class="video-editor">
+
+            <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
+            
+                <label for="video-upload" class="Upload-box"> <!-- for connects this label to the input with id="video-upload"  -->
+
+                    <h1 id="Text"> Click And Upload Your Video Here... </h1>
+                    
+                </label>
+
+                <input type="file" name="file" id="video-upload" style= "display: none;">
+
+
+                <script>
+
+                    const form = document.getElementById("upload-form");
+                    
+                    const file_input = document.getElementById("video-upload");
+
+                    const display_text = document.getElementById("Text");
+
+                    const upload_box = document.querySelector(".Upload-box");
+
+                    file_input.addEventListener("change", function() {
+                        if (file_input.files.length > 0) {
+                            // Insanely simple. We just change the copy, keeping your exact CSS intact.
+                            display_text.innerText = " Uploading your video... ";
+                            
+                            // Push it to the server
+                            form.submit();
+
+                            upload_box.style.opacity = "0.5";
+                            upload_box.style.cursor = "not-allowed";
+
+                        }
+                    });
+
+                </script>
+
+
+            </form>
+
+
+
+        </div>
+    </div>
+
+
+</body>
+</html>

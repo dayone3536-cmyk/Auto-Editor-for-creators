@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href =/static/style.css >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+
+    <body id="ID-of-the-main-body">
+
+        <div class="niche_selector">
+
+
+
+             <div class = "card">
+                 <div class = "Editor">
+
+                    <form action = "/edit-form" id = "editing" method="post" >
+
+                        <button type = "submit" id="for-editing-button" >Do  You Want To Save Time By Auto Editing Your Videos?? </button>
+
+                    </form>
+
+                </div> 
+
+
+                <h1> Whats your niche ? </h1> <br>
+
+
+
+                <form action= "/display" method="post" id="button_form">
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="History">
+                            History 
+                        </label> 
+                    </div>
+
+                    <div class="box">         
+                        <label>
+                            <input type="radio" name="niche" value="AI clips">
+                            AI clips 
+                        </label> 
+                    </div>
+                    
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="gaming">
+                            gaming
+                        </label>
+                    </div>
+                    
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Facts">
+                            Facts 
+                        </label>
+                    </div>
+                    
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Storytelling">
+                            Storytelling
+                        </label>
+                    </div>
+                   
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Mystery">
+                            Mystery
+                        </label>
+                    </div>
+                  
+
+                    <div class="box"> 
+                        <label>  
+                            <input type="radio" name="niche" value="motivation">
+                            motivation
+                        </label>
+                    </div>
+                    
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Self improvement">
+                            Self improvement
+                        </label>
+                    </div>
+                    
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="AI Tools">
+                            AI Tools  
+                        </label>
+                    </div>
+                  
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Tech">
+                            Tech
+                        </label>
+                    </div>
+              
+
+                    <div class="box">
+                        <label>
+                            <input type="radio" name="niche" value="Productivity">
+                            Productivity
+                        </label>
+                    </div>
+
+              
+                    <button id="sumbitBtn" type="submit"> SUMBIT </button>
+
+                    <script>
+                        const form = document.getElementById("button_form")
+                        const button = document.getElementById("sumbitBtn")
+
+                        function form_listner(){
+                            button.disabled = true
+                            button.innerText = "Loading..."
+                        }
+
+                        form.addEventListener("submit", form_listner)
+                        button.disabled = false
+
+
+                    </script>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
